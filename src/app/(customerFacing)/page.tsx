@@ -6,6 +6,7 @@ import { Product } from "@prisma/client";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
+import fs from "fs";
 
 const getNewestProducts = cache(
   () => {
@@ -20,6 +21,10 @@ const getNewestProducts = cache(
 );
 
 const getPopularProducts = cache(() => {
+  console.log(`${process.env.DATABASE_URL}`);
+  if (fs.existsSync(process.env.DATABASE_URL as string)) {
+    console.log("file exists");
+  }
   return db.product.findMany({
     where: { isAvailableForPurchase: true },
     orderBy: { orders: { _count: "desc" } },
