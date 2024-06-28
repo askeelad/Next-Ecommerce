@@ -22,7 +22,7 @@ const getNewestProducts = cache(
 
 const getPopularProducts = cache(() => {
   console.log(`${process.env.DATABASE_URL}`);
-  if (fs.existsSync(process.env.DATABASE_URL as string)) {
+  if (fs.existsSync(`./prisma/dev.db`)) {
     console.log("file exists");
   }
   return db.product.findMany({

@@ -43,7 +43,7 @@ export async function emailOrderHistory(
   if (user == null) {
     return {
       message:
-        "Check your email to view your order history and download your products.",
+        "Check your email to view your order history and download your products nulll.",
     };
   }
 
