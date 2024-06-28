@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import fs from "fs/promises";
+import path from "path";
 import db from "@/db/db";
 import { notFound, redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -27,11 +28,11 @@ export async function addProduct(previouState: unknown, formData: FormData) {
 
   const data = result.data;
 
-  await fs.mkdir("products", { recursive: true });
+  await fs.mkdir(path.join(__dirname, "products"), { recursive: true });
   const filePath = `products/${crypto.randomUUID()}-${data.file.name}`;
   await fs.writeFile(filePath, Buffer.from(await data.file.arrayBuffer()));
 
-  await fs.mkdir("public/products", { recursive: true });
+  await fs.mkdir(path.join(__dirname, "/public/products"), { recursive: true });
   const imagePath = `/products/${crypto.randomUUID()}-${data.image.name}`;
   await fs.writeFile(
     `public${imagePath}`,
